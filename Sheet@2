@@ -1,0 +1,89 @@
+Create database Chetu_Inc
+Use Chetu_Inc
+CREATE TABLE Emp
+(Emp_ID int primary key identity,
+Depart_No varchar(50),
+Salary varchar(80))
+Select * from Emp
+INSERT INTO Emp VALUES
+(20,400),
+(21,500),
+(22,600),
+(23,1000),
+(24,1500),
+(25,2000),
+(26,2500)
+
+ALTER TABLE EMP ALTER COLUMN SALARY INT
+
+-----1. Select all the employee group by deptno and sal in descending order------
+SELECT * FROM Emp
+ORDER BY Depart_NO DESC, Salary DESC;
+
+-------How can I create an empty table emp1 with same structure as emp?----------
+SELECT * INTO Emp1 FROM Emp WHERE 1=0
+SELECT * FROM Emp1
+
+
+--------retrive record where sal between 1000 to 2000---------
+SELECT * FROM Emp
+WHERE Salary BETWEEN 1000 AND 2000;
+
+
+-------Select all records where dept no of both emp and dept table matches-------
+
+
+
+
+------If there are two tables emp1 and emp2, and both have common record--------
+
+INSERT INTO EMP1 VALUES
+(10,400),
+(11,100),
+(12,100),
+(13,1000),
+(14,1500),
+(15,1000),
+(16,1500)
+DELETE FROM EMP1 WHERE EMP_ID=3
+
+
+SELECT * INTO Emp2 FROM Emp1
+SELECT * FROM EMP2
+(Select * from EMP2) Intersect (Select * from EMP1)  
+
+
+---------fetch only common records from two tables emp and emp1-------
+(Select * from EMP1) Intersect (Select * from EMP)  
+
+
+
+
+
+
+
+
+---------Count the totalsa deptno wise where more than 2 employees exist.-------
+SELECT Depart_No, SUM(Salary) "Total" FROM Emp
+GROUP BY Depart_No 
+HAVING COUNT(Emp_ID) >= 2
+
+
+----------Using Aggregate functions: Count,Min,Max,Sum,Avg-------
+SELECT COUNT(Emp_ID)
+FROM EMP;
+
+SELECT min(Salary)
+FROM EMP;
+
+SELECT Max(Salary)
+FROM EMP;
+
+
+SELECT sum(Salary)
+FROM EMP;
+
+
+SELECT avg(Salary)
+FROM EMP;
+
