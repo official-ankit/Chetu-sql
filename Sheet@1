@@ -1,0 +1,161 @@
+CREATE DATABASE HCL
+USE HCL
+CREATE TABLE EMP
+(id int identity,
+Name varchar(100),
+Emp_id int,
+Dept_No int,
+Salary int)
+INSERT INTO EMP VALUES
+('RAM',101,10,10000),
+('SHIVAY',102,11,15000),
+('MOHAN',103,12,20000),
+('MONIKA',104,13,8500),
+('ANJALI',105,14,9000),
+('DHIKSHA',106,20,4000),
+('SWEETI',107,NULL,16000),
+('VARSHA',108,17,11000),
+('PARUL',109,15,8000)
+SELECT* FROM EMP
+
+----display the employee details whose salary is less than10000-----
+SELECT * FROM EMP
+WHERE SALARY>10000
+
+
+
+---display the employee details whose salary is greater than or equal to 9000 AND less than 15000---
+
+SELECT * FROM EMP
+WHERE SALARY<=90000 AND SALARY>15000 
+
+----display the employee details whose salary is not between 9000 and 15000----
+SELECT * FROM EMP
+WHERE Salary NOT BETWEEN 9000 AND 15000;
+
+
+-------- display the employee details whose name starts with ‘r’-----
+SELECT * FROM EMP
+WHERE Name LIKE 'R%'
+
+
+
+----- display the employee details whose name ends with ‘y’-----
+SELECT * FROM EMP
+WHERE Name LIKE '%Y'
+
+
+
+-----display the employee details whose name contains the letter ‘a’
+
+SELECT * FROM EMP
+WHERE Name LIKE '%A%'
+
+
+
+---Display the employee details whose names contains only three letters-----
+
+
+
+
+
+
+----- display the employee details whose names contain ‘r’ and salary greater than 9000----
+
+
+
+
+
+
+------display the employee details whose salary is greater than ram-----
+SELECT * FROM EMP
+WHERE EMP.Salary > RAM.Salary 
+
+
+
+----display the employee details whose employee id starts with 1 and ends with 1-----
+
+
+
+
+----- change the deptno as ‘10’whose employee id is 102, 103, 107--
+UPDATE EMP
+SET Dept_No=10 where Emp_id=102
+UPDATE EMP
+SET Dept_No=10 where Emp_id=103
+UPDATE EMP
+SET Dept_No=10 where Emp_id=107
+
+
+
+------ change the deptno as 20 who does not have deptno
+UPDATE EMP
+SET Dept_No=NULL where id =5
+
+
+UPDATE EMP
+SET Dept_No=20 where id =5
+
+
+
+
+--change the employee salaries as 12000 who are working under 10 dept and their names starts with ‘r’ ---
+UPDATE EMP
+SET Salary=12000 where Dept_No =10 AND Name LIKE 'R%'
+
+
+
+----change the deptno as 30 whose second letter is ‘a’----
+UPDATE EMP
+SET Dept_No=30 where Name LIKE 'A%%'
+
+
+
+-----Change the employee salaries as 8500 who are working under 10 and 20 deptno-----
+
+UPDATE EMP
+SET Salary=8500 WHERE Dept_No BETWEEN 10 AND 20;
+
+
+
+----change the employee salaries as 8500 who are not working under 10 and 20 deptno----
+
+UPDATE EMP
+SET Salary=8500 WHERE Dept_No NOT BETWEEN 10 AND 20;
+
+
+
+
+----change the employee salaries as 15000 and names ends with ‘m’ & working under 10 deptno
+
+UPDATE EMP
+SET Salary=15000 where Dept_No =10 AND Name LIKE '%M'
+
+
+
+----- change the employee salaries as 5500 whose employee id ends with 4 and deptno starts with 2
+
+UPDATE EMP
+SET Salary=5500 where Emp_id LIKE '%4' AND Dept_No LIKE '2%'
+
+
+
+--change the employee salaries as 25000 whose salary less than 10000 and the name contains letter ‘a’ and working under dept 20----
+
+
+
+
+----change the employee salaries as 10000 whose salary is greater than or equal to 8500 and less than or equal to 9000
+
+
+select * from emp
+
+
+
+
+
+
+
+
+
+
