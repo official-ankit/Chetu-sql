@@ -1,0 +1,87 @@
+CREATE DATABASE BHARTIYA_TECH
+CREATE TABLE EMP(ID INT IDENTITY,ENAME VARCHAR(100),DEPTNO INT,SALARY INT,PROFILE VARCHAR(100))
+SP_HELP EMP
+INSERT INTO EMP VALUES
+('BLAKE',10,15000,'SALESMEN'),
+('SCOTT',20,2000,'CLERK'),
+('KING',30,25000,'SALESMEN'),
+('NITISH',40,1500,'HR'),
+('SHASHI',50,13000,'MANAGER'),
+('MANOJ',60,10000,'DEVELOPER')
+
+
+
+
+------- annual salary information provided by emp table. How to fetch monthly salary of each and every employee
+
+
+
+
+--Select all record from emp table where deptno =10 or 40
+
+SELECT * FROM EMP
+WHERE DEPTNO=10
+
+ -----Select all record from emp table where deptno=30 and sal>1500.
+
+ SELECT * FROM EMP
+ WHERE DEPTNO=30 AND SALARY>1500
+
+
+ ----Select all record from emp where job not in SALESMAN or CLERK.
+ SELECT * FROM EMP
+ WHERE PROFILE!='SALESMEN'
+ 
+
+  SELECT * FROM EMP
+ WHERE PROFILE!='CLERK' 
+
+
+ -----Select all record from emp where ename in 'BLAKE','SCOTT','KING'and'FORD'.
+SELECT * FROM EMP
+ WHERE ENAME='BLAKE'
+
+ SELECT * FROM EMP
+ WHERE ENAME='SCOTT'
+
+ SELECT * FROM EMP
+ WHERE ENAME='SCOTT'
+
+
+
+ ----Select all records where ename starts with ‘S’ and its lenth is 6 char.
+ SELECT * FROM EMP
+ WHERE ENAME LIKE 'S%' 
+
+
+
+
+ -----Select all records where ename may be any no of character but it should end with ‘R’.
+  SELECT * FROM EMP
+ WHERE ENAME LIKE '%R' 
+
+
+ ---- In emp table add comm+sal as total sal -----
+
+
+
+
+
+
+ --------Select any salary <3000 from emp table---
+
+ SELECT * FROM EMP
+ WHERE DEPTNO=20 AND SALARY<3000
+
+
+
+ -----.Select all salary <3000 from emp table
+
+SELECT * FROM EMP
+WHERE SALARY<3000
+
+
+
+
+
+
