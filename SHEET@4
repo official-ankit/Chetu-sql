@@ -1,0 +1,167 @@
+CREATE DATABASE COMPANY
+USE COMPANY
+CREATE TABLE EMPLOYEEEDETAILSTABLE(EMPLOYEE_ID INT IDENTITY,FIRST_NAME VARCHAR(50),LAST_NAME VARCHAR(50),
+SALARY VARCHAR(50),JOINING_DATE VARCHAR(50),DEPARTMENT VARCHAR(50),GANDER VARCHAR(40))
+
+INSERT INTO EMPLOYEEEDETAILSTABLE VALUES
+('VIKASH','AHALWAT','60000.00','2013-02-15 11:16:28.290','IT','MALE'),
+('NIKETA','JAIN','530000.00','2014-01-09 17:31:07.793','HR','FEMALE'),
+('ASHISH','KUMAR','1000000.00','2014-01-09 10:05:07.793','IT','MALE'),
+('NIKHIL','SHARMA','480000.00','2014-01-09 10:05:07.793','HR','MALE'),
+('ANISH','KADAIN','500000.00','2014-01-09 10:05:07.793','PAYROLL','MALE')
+
+
+CREATE TABLE PROJECTDETAILSTABLE(PROJECTDETAILS_ID INT IDENTITY,
+EMPLOYEE_DETAILSA VARCHAR(50),PROJECT_NAME VARCHAR(100))
+INSERT INTO PROJECTDETAILSTABLE VALUES
+('1','TASK TRACK'),
+('1','CLP'),
+('1','SURVEY MANAGEMENT'),
+('2','HR MANAGEMENT'),
+('3','TASK TRACK'),
+('3','GRS'),
+('3','DDS'),
+('4','HR MANAGEMENT'),
+('6','GL MANAGEMENT')
+
+
+
+
+ -----Get all employee detail from EmployeeDetail table whose "FirstName" not start with any single character between 'a-p'----
+  
+  SELECT * FROM EMPLOYEEEDETAILSTABLE
+  WHERE FIRST_NAME NOT LIKE  '[^a-p]%'
+
+  
+
+  ------Get all employee detail from EmployeeDetail table whose "Gender" end with 'le' and contain 4 letters. The Underscore(_) Wildcard Character represents any single character.------
+
+      SELECT * FROM EMPLOYEEEDETAILSTABLE
+  WHERE GANDER  LIKE '__le'
+
+
+  ----- Get all employee detail from EmployeeDetail table whose "FirstName" start with 'A' and contain 5 letters.---
+  SELECT * FROM EMPLOYEEEDETAILSTABLE
+  WHERE FIRST_NAME LIKE 'A____'
+
+
+
+  ---- Get all employee detail from EmployeeDetail table whose "FirstName" containing '%'. ex:-"Vik%as".----
+
+   SELECT * FROM EMPLOYEEEDETAILSTABLE
+  WHERE FIRST_NAME LIKE '%[%]%'
+
+
+  ----- Get all unique "Department" from EmployeeDetail table.
+ SELECT DISTINCT(Department) FROM EMPLOYEEEDETAILSTABLE
+
+
+
+
+ ----- Get the highest "Salary" from EmployeeDetail table.
+SELECT MAX(SALARY) FROM EMPLOYEEEDETAILSTABLE
+
+
+
+----Show "JoiningDate" in "dd mmm yyyy" format, ex- "15 Feb 2013"
+SELECT CONVERT(VARCHAR(20),JOINING_DATE,106) FROM EMPLOYEEEDETAILSTABLE
+
+
+
+
+-----Show "JoiningDate" in "yyyy/mm/dd" format, ex- "2013/02/15"
+
+ SELECT CONVERT(VARCHAR(20),JOINING_DATE,111) FROM EMPLOYEEEDETAILSTABLE
+
+
+ ------Show only time part of the "JoiningDate"
+
+ SELECT CONVERT(VARCHAR(20),JOINING_DATE,108) FROM EMPLOYEEEDETAILSTABLE
+
+ ---- Get only Year part of "JoiningDate".
+
+ SELECT DATEPART(YEAR, JOINING_DATE) FROM EMPLOYEEEDETAILSTABLE
+
+
+ ----- Get the first name, current date, joiningdate and diff between current date and joining date in months.
+
+ SELECT FIRST_NAME, GETDATE() [Current Date], JOINING_DATE,
+DATEDIFF(MM,JOINING_DATE,GETDATE()) AS [Total Months] FROM EMPLOYEEEDETAILSTABLE
+
+
+
+
+------ Get all employee details from EmployeeDetail table whose joining year is 2013.
+
+ SELECT * FROM EMPLOYEEEDETAILSTABLE WHERE DATEPART(YYYY,JOINING_DATE) = '2013'
+
+ ---- Get all employee details from EmployeeDetail table whose joining month is Jan(1)
+ SELECT * FROM EMPLOYEEEDETAILSTABLE WHERE DATEPART(MM,JOINING_DATE) = '1'
+
+
+ ------ Get all employee details from EmployeeDetail table whose joining date between "2013-01-01" and "2013-12-01".
+ SELECT * FROM EMPLOYEEEDETAILSTABLE WHERE JOINING_DATE BETWEEN '2013-01-01' AND '2013-12-01'
+
+
+ ----- Display first name and Gender as M/F.(if male then M, if Female then F)
+ SELECT FIRST_NAME,
+    CASE WHEN GANDER = 'MALE' THEN 'M' WHEN GANDER = 'FEMALE' THEN 'F' ELSE 'OTHER' END
+FROM EMPLOYEEEDETAILSTABLE
+
+
+
+------ Get employee name, project name order by firstname from "EmployeeDetail" and "ProjectDetail" for those employee which have assigned project already.
+ SELECT FIRST_NAME,PROJECT_NAME FROM EMPLOYEEEDETAILSTABLE A 
+ INNER JOIN PROJECTDETAILSTABLE B ON A.EMPLOYEE_ID = B.EMPLOYEE_DETAILSA ORDER BY FIRST_NAME
+
+
+ --Get employee name, project name order by firstname from "EmployeeDetail" and "ProjectDetail" for all employee even they have not assigned project.
+ SELECT FIRST_NAME,PROJECT_NAME FROM EMPLOYEEEDETAILSTABLE A 
+ LEFT OUTER JOIN PROJECTDETAILSTABLE B ON A.EMPLOYEE_ID = B.EMPLOYEE_DETAILSA ORDER BY FIRST_NAME
+
+--- Get employee name, project name order by firstname from "EmployeeDetail" and "ProjectDetail" for all employee if project is not assigned then display "-No Project Assigned"
+
+SELECT FIRST_NAME, ISNULL(PROJECT_NAME,'-No Project Assigned') FROM EMPLOYEEEDETAILSTABLE A 
+LEFT OUTER JOIN PROJECTDETAILSTABLE B ON A.EMPLOYEE_ID = B.EMPLOYEE_DETAILSA ORDER BY FIRST_NAME
+
+
+--- Get all project name even they have not matching any employeeid, in left table, order by firstname from "EmployeeDetail" and "ProjectDetail"
+SELECT FIRST_NAME,PROJECT_NAME FROM EMPLOYEEEDETAILSTABLE A 
+RIGHT OUTER JOIN PROJECTDETAILSTABLE B ON A.EMPLOYEE_ID = B.EMPLOYEE_DETAILSA ORDER BY FIRST_NAME
+
+
+
+---- Get complete record(employeename, project name) from both tables([EmployeeDetail],[ProjectDetail]), if no match found in any table then show NULL 
+ SELECT FIRST_NAME,PROJECT_NAME FROM EMPLOYEEEDETAILSTABLE A 
+ FULL OUTER JOIN PROJECTDETAILSTABLE B ON A.EMPLOYEE_ID = B.EMPLOYEE_DETAILSA ORDER BY FIRST_NAME
+
+ ----- Write a query to find out the employeename who has not assigned any project, and display "-No Project Assigned"( tables :- [EmployeeDetail],[ProjectDetail])
+ SELECT FIRST_NAME, ISNULL(PROJECT_NAME,'-No Project Assigned') AS PROJECT_NAME FROM EMPLOYEEEDETAILSTABLE A 
+ LEFT OUTER JOIN PROJECTDETAILSTABLE B ON A.EMPLOYEE_ID = B.EMPLOYEE_DETAILSA
+WHERE PROJECT_NAME IS NULL
+
+
+----Write a query to find out the project name which is not assigned to any employee( tables :- [EmployeeDetail],[ProjectDetail])
+
+SELECT PROJECT_NAME FROM EMPLOYEEEDETAILSTABLE A RIGHT OUTER JOIN PROJECTDETAILSTABLE B ON 
+A.EMPLOYEE_ID = B.EMPLOYEE_DETAILSA
+WHERE FIRST_NAME IS NULL
+
+
+
+----- Write down the query to fetch EmployeeName and Project who has assign more than one project
+Select EMPLOYEE_ID, FIRST_NAME, PROJECT_NAME from EMPLOYEEEDETAILSTABLE E INNER JOIN PROJECTDETAILSTABLE P
+ON E.EMPLOYEE_ID = P.EMPLOYEE_DETAILSA
+WHERE EMPLOYEE_ID IN (SELECT EMPLOYEE_DETAILSA FROM PROJECTDETAILSTABLE GROUP BY 
+EMPLOYEE_DETAILSA HAVING COUNT(*) >1 )
+
+
+------Write down the query to fetch ProjectName on which more than one employee are working along with EmployeeName
+ Select P.PROJECT_NAME, E.FIRST_NAME from PROJECTDETAILSTABLE P INNER JOIN EMPLOYEEEDETAILSTABLE E
+on p.EMPLOYEE_DETAILSA = E.EMPLOYEE_ID where P.PROJECT_NAME in(select PROJECT_NAME from PROJECTDETAILSTABLE
+group by PROJECT_NAME having COUNT(1)>1)
+
+
+SELECT * FROM PROJECTDETAILSTABLE
+
+SELECT * FROM EMPLOYEEEDETAILSTABLE
